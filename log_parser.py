@@ -15,16 +15,11 @@ with open(sys.argv[1], 'r') as f:
         # extract the timestamp, username, and start/end marker from the line
         try:
             time_str, username, marker = line.strip().split()
+            time = datetime.strptime(time_str, '%H:%M:%S')
+            if not username.isalnum():
+                continue
         except ValueError:
             continue  # ignore invalid lines
-        
-        # parse the timestamp
-        try:
-                time = datetime.strptime(time_str, '%H:%M:%S')
-        except ValueError:
-            # Ignore irrelevants timestamp
-            continue
-        
         
         # update the earliest and latest timestamps
         if time < earliest_time:
